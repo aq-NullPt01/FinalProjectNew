@@ -1,3 +1,16 @@
-# Software Engineering Project Starter Code
+# Pythagorean Theorem Triple Finder
 
-This repo will start you off with an initial configuration that you'll modify as part of Checkpoint 1. As part of the modifications, you'll eventually delete the contents of this README and replace it with documentation for your project.
+This system will use The Pythagorean Theorem to find all sets of the positive integers a, b, and c up to a user-provided integer where:
+
+a^2 + b^2 = c^2
+
+For instance, if the input is 10, the system will search values from 1 through 10 and find the Pythagorean triples that satisfy the theorem.
+
+
+Example input:  10
+
+
+Example output:   (3,4,5),(6,8,10)
+
+
+![System Design Diagram](images/SystemDiagram.png)
