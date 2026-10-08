@@ -13,4 +13,4 @@ Example input:  10
 Example output:   (3,4,5),(6,8,10)
 
 
-![System Design Diagram](images/SystemDiagram.png)
+![System Design Diagram](images/PythSystemDia.png)
