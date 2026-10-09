@@ -13,5 +13,6 @@ public interface ComputeEngineAPI {
      *
      * @param request the requested computation job
      */
-    void submitJob(JobRequest request);
+    JobResponse submitJob(JobRequest request);
+
 }

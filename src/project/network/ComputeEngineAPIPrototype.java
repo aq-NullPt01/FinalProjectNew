@@ -12,19 +12,9 @@ public class ComputeEngineAPIPrototype {
     @NetworkAPIPrototype
     public void prototype(ComputeEngineAPI api) {
 
-        InputSource source = new InputSource() {
-            @Override
-            public String getLocation() {
-                return "input.txt";
-            }
-        };
+    	InputSource source = new InputSource() { };
 
-        OutputDestination destination = new OutputDestination() {
-            @Override
-            public String getLocation() {
-                return "output.txt";
-            }
-        };
+    	OutputDestination destination = new OutputDestination() { };
 
         JobRequest request = new JobRequest() {
             @Override
