@@ -7,15 +7,25 @@ import project.annotations.ConceptualAPIPrototype;
  */
 public class ComputationAPIPrototype {
 
-    /**
-     * Demonstrates how the job handler uses the computation API.
-     *
-     * @param api conceptual API being demonstrated
-     */
-    @ConceptualAPIPrototype
-    public void prototype(ComputationAPI api) {
-        int input = 10;
 
-        api.compute(input);
-    }
-}
+	 public static void main(String[] args) {
+
+		    // Create the computation API implementation
+	        ComputationAPI api = new ComputationAPIImpl();
+
+	        // Create a computation request
+	        ComputationRequest request = new ComputationRequest() {
+
+	            @Override
+	            public int getMaximumValue() {
+	                return 10;
+	            }
+	        };
+
+	        // Call the computation API
+	        ComputationResult result = api.compute(request);
+
+	        // Display the result
+	        System.out.println("Computation Result: " + result);
+	    }
+	}
