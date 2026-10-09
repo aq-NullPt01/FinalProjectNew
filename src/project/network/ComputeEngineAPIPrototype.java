@@ -17,5 +17,6 @@ public class ComputeEngineAPIPrototype {
         JobRequest request = null;
         
         api.submitJob(request);
+        
     }
 }
