@@ -14,5 +14,5 @@ public interface ComputationAPI {
      * @param input maximum value used in the search
      * @return results of the computation
      */
-    ComputationResult compute(int input);
+    ComputationResult compute(ComputationRequest request);
 }

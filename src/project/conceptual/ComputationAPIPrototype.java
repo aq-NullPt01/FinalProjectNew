@@ -14,8 +14,14 @@ public class ComputationAPIPrototype {
      */
     @ConceptualAPIPrototype
     public void prototype(ComputationAPI api) {
-        int input = 10;
 
-        api.compute(input);
+        ComputationRequest request = new ComputationRequest() {
+            @Override
+            public int getMaximumValue() {
+                return 10;
+            }
+        };
+
+        ComputationResult result = api.compute(request);
     }
 }
