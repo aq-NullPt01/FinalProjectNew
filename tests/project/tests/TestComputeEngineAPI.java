@@ -14,21 +14,25 @@ import project.process.DataStorageAPI;
 
 public class TestComputeEngineAPI {
 
-    @Test
-    public void testSubmitJobPlaceholder() {
+	 @Test
+	    public void testSubmitJob() {
 
-        // Mock dependencies.
-        DataStorageAPI storage = mock(DataStorageAPI.class);
-        ComputationAPI computation = mock(ComputationAPI.class);
+	        // Mock the two API dependencies
+	        DataStorageAPI mockStorage = mock(DataStorageAPI.class);
 
-        // Explicitly construct the network API implementation.
-        ComputeEngineAPI api =
-                new ComputeEngineAPIImpl(storage, computation);
+	        ComputationAPI mockComputation = mock(ComputationAPI.class);
 
-        JobRequest request = mock(JobRequest.class);
+	        // Inject Mockito mocks through the constructor
+	        ComputeEngineAPIImpl engine =
+	                new ComputeEngineAPIImpl(mockStorage, mockComputation);
 
-        JobResponse response = api.submitJob(request);
+	        // Mock the job request
+	        JobRequest mockRequest =   mock(JobRequest.class);
 
-        assertNull(response);
-    }
-}
+	        // Call the API method
+	        JobResponse response = engine.submitJob(mockRequest);
+
+	        // Will fail until the API is implemented
+	        assertNotNull(response);
+	    }
+	 }

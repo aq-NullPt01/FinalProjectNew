@@ -1,27 +1,27 @@
 package project.tests;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import static org.mockito.Mockito.mock;
 
 import org.junit.jupiter.api.Test;
 
-import project.process.DataStorageAPI;
-import project.process.DataStorAPIImpl;
+import project.process.DataStorageAPIImpl;
 import project.process.InputSource;
 import project.process.IntegerData;
 
+
 public class TestDataStorageAPI {
 
-    @Test
-    public void testReadInputPlaceholder() {
+	@Test
+    public void testReadInputData() {
 
-        DataStorageAPI api = new DataStorAPIImpl();
+        InputSource mockSource = mock(InputSource.class);
 
-        // Mock the input source.
-        InputSource source = mock(InputSource.class);
+        DataStorageAPIImpl storage =   new DataStorageAPIImpl();
 
-        IntegerData result = api.readInputData(source);
+        IntegerData data = storage.readInputData(mockSource);
 
-        assertNull(result);
+        assertNotNull(data);
     }
 }

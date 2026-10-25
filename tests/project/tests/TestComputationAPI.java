@@ -1,30 +1,35 @@
 package project.tests;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 
 import org.junit.jupiter.api.Test;
 
-import project.conceptual.ComputationAPI;
+
 import project.conceptual.ComputationAPIImpl;
 import project.conceptual.ComputationRequest;
 import project.conceptual.ComputationResult;
 
 public class TestComputationAPI {
 
-    @Test
-    public void testComputePlaceholder() {
-    	
+	 @Test
+	    public void testCompute() {
 
-        // Explicitly create the real API implementation.
-        ComputationAPI api = new ComputationAPIImpl();
+	        ComputationRequest mockRequest =
+	                mock(ComputationRequest.class);
 
-        // Mock the request object.
-        ComputationRequest request =  mock(ComputationRequest.class);
+	        when(mockRequest.getMaximumValue())
+	                .thenReturn(10);
 
-        // Placeholder implementation currently returns null.
-        ComputationResult result = api.compute(request);
+	        ComputationAPIImpl computation =
+	                new ComputationAPIImpl();
 
-        assertNull(result);
-    }
+	        ComputationResult result =
+	                computation.compute(mockRequest);
+
+	        assertNotNull(result);
+	    }
 }

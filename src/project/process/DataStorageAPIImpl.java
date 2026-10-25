@@ -1,6 +1,12 @@
 package project.process;
 
 public class DataStorageAPIImpl implements DataStorageAPI {
+	
+    public DataStorageAPIImpl() {
+        // No external API dependencies required
+    }
+
+
 
     @Override
     public IntegerData readInputData(InputSource source) {
