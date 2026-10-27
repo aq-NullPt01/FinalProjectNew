@@ -1,6 +1,7 @@
 package project.tests;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 
 import org.junit.jupiter.api.Test;
@@ -12,27 +13,27 @@ import project.network.JobRequest;
 import project.network.JobResponse;
 import project.process.DataStorageAPI;
 
+/**
+ * Smoke tests for the network API.
+ */
 public class TestComputeEngineAPI {
 
-	 @Test
-	    public void testSubmitJob() {
+    /**
+     * Checks constructor injection and response handling.
+     */
+    @Test
+    public void testComputeEngineAPI() {
 
-	        // Mock the two API dependencies
-	        DataStorageAPI mockStorage = mock(DataStorageAPI.class);
+        DataStorageAPI storage = mock(DataStorageAPI.class);
+        ComputationAPI computation = mock(ComputationAPI.class);
+        JobRequest request = mock(JobRequest.class);
 
-	        ComputationAPI mockComputation = mock(ComputationAPI.class);
+        ComputeEngineAPI engine =
+                new ComputeEngineAPIImpl(storage, computation);
 
-	        // Inject Mockito mocks through the constructor
-	        ComputeEngineAPIImpl engine =
-	                new ComputeEngineAPIImpl(mockStorage, mockComputation);
+        JobResponse response = engine.submitJob(request);
 
-	        // Mock the job request
-	        JobRequest mockRequest =   mock(JobRequest.class);
-
-	        // Call the API method
-	        JobResponse response = engine.submitJob(mockRequest);
-
-	        // Will fail until the API is implemented
-	        assertNotNull(response);
-	    }
-	 }
+        assertNotNull(response);
+        assertFalse(response.isAccepted());
+    }
+}
