@@ -22,25 +22,19 @@ public class ComputeEngineIntegrationTest {
     public void testComputeEngine() {
 
         // Create test-only data storage
-        InMemoryDataStorage storage =
-                new InMemoryDataStorage();
+        InMemoryDataStorage storage =   new InMemoryDataStorage();
 
         // Create real computation implementation
-        ComputationAPIImpl computation =
-                new ComputationAPIImpl();
+        ComputationAPIImpl computation =  new ComputationAPIImpl();
 
         // Create real network implementation
-        ComputeEngineAPIImpl engine =
-                new ComputeEngineAPIImpl(storage, computation);
+        ComputeEngineAPIImpl engine =  new ComputeEngineAPIImpl(storage, computation);
 
         // Set input values
-        InMemoryInputSource input =
-                new InMemoryInputSource(
-                        Arrays.asList(1, 10, 25));
+        InMemoryInputSource input =    new InMemoryInputSource( Arrays.asList(1, 10, 25));
 
         // Create output destination
-        InMemoryOutputDestination output =
-                new InMemoryOutputDestination();
+        InMemoryOutputDestination output = new InMemoryOutputDestination();
 
         // Create job request
         JobRequest request = new JobRequest() {

@@ -21,7 +21,7 @@ public class ComputeEngineAPIImpl implements ComputeEngineAPI {
     @Override
     public JobResponse submitJob(JobRequest request) {
 
-        // TODO: Process computation job
+    	// Empty implementation for Checkpoint 3
         return null;
     }
 }
