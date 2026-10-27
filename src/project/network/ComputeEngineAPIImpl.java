@@ -50,21 +50,19 @@ public class ComputeEngineAPIImpl implements ComputeEngineAPI {
             //perform computtaion
             for (int maximumValue : inputValues) {
 
-                // Create a computation request
-                ComputationRequest computationRequest = () -> maximumValue;
+                ComputationRequest computationRequest =() -> maximumValue;
 
-                // Call the computation API
                 ComputationResult result = computation.compute(computationRequest);
 
-                // Format this input and its results
-                output.append(maximumValue);
-                output.append(inputSeparator);
+                // Separate each input's output with a comma.
+                if (output.length() > 0) {
+                    output.append(",");
+                }
 
-                List<String> triples = result.getPythagoreanTriples();
+                // Format the result for this input.
+                String formattedResult = String.join( ";",result.getPythagoreanTriples());
 
-                output.append(String.join(resultSeparator, triples));
-
-                output.append(System.lineSeparator());
+                output.append(formattedResult.isEmpty() ? "none"  : formattedResult.replace(",", "-"));
             }
 
             // Step 3: Write the formatted output
