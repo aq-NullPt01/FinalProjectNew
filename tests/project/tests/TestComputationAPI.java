@@ -1,34 +1,34 @@
 package project.tests;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-import static org.mockito.Mockito.mock;
-
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-
+import project.conceptual.ComputationAPI;
 import project.conceptual.ComputationAPIImpl;
 import project.conceptual.ComputationRequest;
 import project.conceptual.ComputationResult;
 
+/**
+ * Smoke tests for the computation API.
+ */
 public class TestComputationAPI {
 
-	 @Test
-	    public void testCompute() {
+    /**
+     * Checks that the computation API produces a result.
+     */
+    @Test
+    public void testComputationAPI() {
 
-	        ComputationRequest mockRequest =
-	                mock(ComputationRequest.class);
+        ComputationAPI api = new ComputationAPIImpl();
 
-	        when(mockRequest.getMaximumValue())
-	                .thenReturn(10);
+        ComputationRequest request = () -> 10;
 
-	        ComputationAPIImpl computation =
-	                new ComputationAPIImpl();
+        ComputationResult result = api.compute(request);
 
-	        ComputationResult result =
-	                computation.compute(mockRequest);
+        assertNotNull(result);
 
-	        assertNotNull(result);
-	    }
+        assertTrue(result.getPythagoreanTriples().contains("3,4,5"));
+    }
 }
