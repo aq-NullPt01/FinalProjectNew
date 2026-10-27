@@ -68,10 +68,10 @@ public class ComputationAPIImpl implements ComputationAPI {
     // Check whether three integers form a triple
     private boolean isPythagoreanTriple(int a, int b, int c) {
 
-        long aSquared = (long) a * a;
-        long bSquared = (long) b * b;
-        long cSquared = (long) c * c;
+        long squaredA = (long) a * a;
+        long squaredB = (long) b * b;
+        long squaredC = (long) c * c;
 
-        return aSquared + bSquared == cSquared;
+        return squaredA + squaredB == squaredC;
     }
 }
