@@ -23,7 +23,7 @@ public class ComputationAPIImpl implements ComputationAPI {
         // Get the maximum value from the request
         int maximumValue = request.getMaximumValue();
 
-        // Find all Pythagorean triples
+        // Find all Pyth. triples
         List<String> triples = findPythagoreanTriples(maximumValue);
 
         // Return the result through the API
