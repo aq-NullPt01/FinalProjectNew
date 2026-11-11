@@ -1,6 +1,7 @@
 package project.network;
 
 import java.util.List;
+import java.util.Objects;
 
 import project.conceptual.ComputationAPI;
 import project.conceptual.ComputationRequest;
@@ -11,7 +12,6 @@ import project.process.OutputData;
 
 public class ComputeEngineAPIImpl implements ComputeEngineAPI {
 
-	//dependecy injection
     private final DataStorageAPI storage;
     private final ComputationAPI computation;
 
@@ -19,66 +19,106 @@ public class ComputeEngineAPIImpl implements ComputeEngineAPI {
             DataStorageAPI storage,
             ComputationAPI computation) {
 
-        this.storage = storage;
-        this.computation = computation;
+        this.storage = Objects.requireNonNull(
+                storage, "Storage cannot be null");
+
+        this.computation = Objects.requireNonNull(
+                computation, "Computation cannot be null");
     }
 
     @Override
     public JobResponse submitJob(JobRequest request) {
 
         try {
+            // Checkpoint 5: Validate job request
+            if (request == null) {
+                throw new IllegalArgumentException(
+                        "Job request cannot be null");
+            }
 
-            // Step 1: Read the integers from storage
-            IntegerData inputData = storage.readInputData(request.getInputSource());
+            if (request.getInputSource() == null) {
+                throw new IllegalArgumentException(
+                        "Input source cannot be null");
+            }
 
-            List<Integer> inputValues = inputData.getValues();
+            if (request.getOutputDestination() == null) {
+                throw new IllegalArgumentException(
+                        "Output destination cannot be null");
+            }
 
-            // Step 2: Compute the results for each integer
+            // Step 1: Read input
+            IntegerData inputData =
+                    storage.readInputData(
+                            request.getInputSource());
+
+            if (inputData == null ||
+                    inputData.getValues() == null) {
+                throw new IllegalStateException(
+                        "Input data cannot be null");
+            }
+
+            List<Integer> inputValues =
+                    inputData.getValues();
+
+            // Step 2: Compute results
             StringBuilder output = new StringBuilder();
 
-            ResultDelimiters delimiters = request.getDelimiters();
+            for (Integer maximumValue : inputValues) {
 
-            String inputSeparator = ":";
-            String resultSeparator = ";";
+                if (maximumValue == null) {
+                    throw new IllegalArgumentException(
+                            "Input integer cannot be null");
+                }
 
-            if (delimiters != null) {
-                inputSeparator = delimiters.getInputResultDelimiter();
+                ComputationRequest computationRequest =
+                        () -> maximumValue;
 
-                resultSeparator = delimiters.getResultDelimiter();
-            }
-           
-            //perform computtaion
-            for (int maximumValue : inputValues) {
+                ComputationResult result =
+                        computation.compute(
+                                computationRequest);
 
-                ComputationRequest computationRequest =() -> maximumValue;
+                if (result == null ||
+                        result.getPythagoreanTriples() == null) {
+                    throw new IllegalStateException(
+                            "Computation result cannot be null");
+                }
 
-                ComputationResult result = computation.compute(computationRequest);
-
-                // Separate each input's output with a comma.
                 if (output.length() > 0) {
                     output.append(",");
                 }
 
-                // Format the result for this input.
-                String formattedResult = String.join( ";",result.getPythagoreanTriples());
+                String formattedResult = String.join(
+                        ";", result.getPythagoreanTriples());
 
-                output.append(formattedResult.isEmpty() ? "none"  : formattedResult.replace(",", "-"));
+                output.append(
+                        formattedResult.isEmpty()
+                                ? "none"
+                                : formattedResult.replace(",", "-"));
             }
 
-            // Step 3: Write the formatted output
+            // Step 3: Write output
             String formattedOutput = output.toString();
 
-            OutputData outputData = () -> formattedOutput;
+            OutputData outputData =
+                    () -> formattedOutput;
 
-            storage.writeOutputData(request.getOutputDestination(), outputData);
+            storage.writeOutputData(
+                    request.getOutputDestination(),
+                    outputData);
 
-            // Step 4: Return a successful response
-            return createResponse(true,"Job completed successfully");
+            // Step 4: Success response
+            return createResponse(
+                    true,
+                    "Job completed successfully");
 
         } catch (Exception exception) {
 
-            // Return a failed response
-            return createResponse(false, "Job failed: " + exception.getMessage());
+            // Checkpoint 5: Convert exceptions
+            // into a non-exception failure response
+            return createResponse(
+                    false,
+                    "Job failed: "
+                            + exception.getMessage());
         }
     }
 
