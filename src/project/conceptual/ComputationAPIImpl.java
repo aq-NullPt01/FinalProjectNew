@@ -1,30 +1,37 @@
+
 package project.conceptual;
-
-import project.annotations.ConceptualAPI;
-
 
 import java.util.ArrayList;
 import java.util.List;
-/**
- * Conceptual @Override
-	API between the job handler and computation component.
- */
 
 public class ComputationAPIImpl implements ComputationAPI {
 
+    // Constructor: no parameters require validation
     public ComputationAPIImpl() {
         // No external dependencies needed
     }
 
     @Override
-    public ComputationResult compute(
-            ComputationRequest request) {
+    public ComputationResult compute(ComputationRequest request) {
+
+        // Checkpoint 5: Validate the request
+        if (request == null) {
+            throw new IllegalArgumentException(
+                    "Computation request cannot be null");
+        }
 
         // Get the maximum value from the request
         int maximumValue = request.getMaximumValue();
 
-        // Find all Pyth. triples
-        List<String> triples = findPythagoreanTriples(maximumValue);
+        // Checkpoint 5: Validate the maximum value
+        if (maximumValue <= 0) {
+            throw new IllegalArgumentException(
+                    "Maximum value must be greater than zero");
+        }
+
+        // Find all Pythagorean triples
+        List<String> triples =
+                findPythagoreanTriples(maximumValue);
 
         // Return the result through the API
         return new ComputationResult() {

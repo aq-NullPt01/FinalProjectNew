@@ -1,6 +1,7 @@
 package project.handler;
 
 import java.util.List;
+import java.util.Objects;
 
 import project.conceptual.ComputationAPI;
 import project.conceptual.ComputationRequest;
@@ -17,29 +18,55 @@ public class JobHandler {
     private final DataStorageAPI storage;
     private final ComputationAPI computation;
 
-    // Constructor
+    // Constructor injection with validation
     public JobHandler(
             DataStorageAPI storage,
             ComputationAPI computation) {
 
-        this.storage = storage;
-        this.computation = computation;
+        this.storage = Objects.requireNonNull(
+                storage, "DataStorageAPI cannot be null");
+
+        this.computation = Objects.requireNonNull(
+                computation, "ComputationAPI cannot be null");
     }
 
     // Execute a computation job
     public void execute(JobRequest job) {
 
+        // Validate the job request
+        Objects.requireNonNull(
+                job, "JobRequest cannot be null");
+
+        Objects.requireNonNull(
+                job.getInputSource(),
+                "Input source cannot be null");
+
+        Objects.requireNonNull(
+                job.getOutputDestination(),
+                "Output destination cannot be null");
+
         // Read input data
         IntegerData input =
                 storage.readInputData(job.getInputSource());
 
+        if (input == null) {
+            throw new IllegalStateException(
+                    "Data storage returned null input");
+        }
+
         List<Integer> limits = input.getValues();
+
+        if (limits == null) {
+            throw new IllegalStateException(
+                    "Input values cannot be null");
+        }
 
         StringBuilder text = new StringBuilder();
 
         // Get result delimiters
         ResultDelimiters delimiters = job.getDelimiters();
 
+        // Null delimiters are valid: use defaults
         if (delimiters == null) {
             delimiters = ResultDelimiters.defaults();
         }
@@ -47,7 +74,15 @@ public class JobHandler {
         // Process each input value
         for (int i = 0; i < limits.size(); i++) {
 
-            final int limit = limits.get(i);
+            Integer value = limits.get(i);
+
+            if (value == null) {
+                throw new IllegalArgumentException(
+                        "Input value at index " + i
+                        + " cannot be null");
+            }
+
+            final int limit = value;
 
             // Create computation request
             ComputationRequest request =
@@ -62,6 +97,16 @@ public class JobHandler {
             // Compute Pythagorean triples
             ComputationResult result =
                     computation.compute(request);
+
+            if (result == null) {
+                throw new IllegalStateException(
+                        "Computation returned null result");
+            }
+
+            if (result.getPythagoreanTriples() == null) {
+                throw new IllegalStateException(
+                        "Computation returned null triples");
+            }
 
             // Add delimiter between results
             if (i > 0) {
