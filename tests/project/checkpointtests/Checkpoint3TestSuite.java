@@ -32,7 +32,7 @@ public class Checkpoint3TestSuite {
     public static void initializeAst() throws Exception {
         List<Class<?>> allTestClasses = Utils.loadAllTestClasses();
         Launcher launcher = new Launcher();
-        launcher.addInputResource("test");
+        launcher.addInputResource("tests");
         launcher.addInputResource("src");
         launcher.getEnvironment().setNoClasspath(true);
         launcher.getEnvironment().setAutoImports(true);

@@ -10,4 +10,7 @@ public interface ComputationResult {
     int getInput();
 
     List<String> getPythagoreanTriples();
+    
+    
+    
 }

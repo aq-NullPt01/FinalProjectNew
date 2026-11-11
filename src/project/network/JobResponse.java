@@ -10,4 +10,6 @@ public interface JobResponse {
 
     // Returns a message about the job status
     String getMessage();
+    
+    
 }

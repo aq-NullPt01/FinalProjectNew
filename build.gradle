@@ -11,9 +11,11 @@ sourceSets {
 	}
 	test {
 	  java {
-	     srcDirs = ['test']
+	     srcDirs = ['tests','checkpoint-2-tests']
 	  }
 	 }
+	 
+	 
 }
 
 repositories {
@@ -24,9 +26,9 @@ dependencies {
     testImplementation('org.junit.jupiter:junit-jupiter:5.10.2')
 	testImplementation('org.mockito:mockito-core:5.10.0')
 	implementation('com.google.code.gson:gson:2.13.1')
-	testImplementation( 'fr.inria.gforge.spoon:spoon-core:11.1.1')
 	implementation( 'com.google.code.gson:gson:2.13.1')
-	
+	testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+	testImplementation 'fr.inria.gforge.spoon:spoon-core:11.1.0'
 }
 
 test {

@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 public class Utils {
     public static List<Class<?>> loadAllClasses() throws Exception {
         File rootDir = new File("src");
@@ -15,7 +17,7 @@ public class Utils {
     }
     
     public static List<Class<?>> loadAllTestClasses() throws Exception {
-        File rootDir = new File("test");
+        File rootDir = new File("tests");
         List<Class<?>> result = new ArrayList<>();
         for (File f : rootDir.listFiles()) {
             loadClassesRec(f, result, "");

@@ -41,6 +41,8 @@ public class ComputationAPIImpl implements ComputationAPI {
         };
     }
 
+    
+    
     // Find all triples up to the maximum value
     private List<String> findPythagoreanTriples(int maximumValue) {
 
