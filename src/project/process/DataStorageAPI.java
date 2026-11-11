@@ -14,6 +14,7 @@ public interface DataStorageAPI {
      * @param source the source of the input data
      * @return the integer data read from the source
      */
+	
     IntegerData readInputData(InputSource source);
 
     /**

@@ -58,7 +58,9 @@ public class ManualTestingFramework {
 
             @Override
             public InputSource getInputSource() {
-                return input;
+        
+            	
+            	return input;
             }
 
             @Override
@@ -74,6 +76,18 @@ public class ManualTestingFramework {
 
         JobResponse response = engine.submitJob(request);
 
-        System.out.println(response.getMessage());
+     // Checkpoint 5: Handle failure responses
+     if (response == null) {
+         System.out.println("Job failed: No response received");
+         return;
+     }
+
+     if (!response.isAccepted()) {
+         System.out.println(response.getMessage());
+         return;
+     }
+
+     // Successful job
+     System.out.println(response.getMessage());
     }
 }

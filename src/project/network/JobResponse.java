@@ -8,6 +8,8 @@ public interface JobResponse {
     // Returns the unique job identifier
     String getJobId();
 
+    
+    
     // Returns a message about the job status
     String getMessage();
 }

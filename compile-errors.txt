@@ -1,0 +1,32 @@
+> Task :compileJava UP-TO-DATE
+> Task :processResources NO-SOURCE
+> Task :classes UP-TO-DATE
+
+> Task :compileTestJava FAILED
+/Users/alexisquijada/SE Project/FinalProjectNew/tests/project/tests/memory/InMemoryInputSource.java:22: error: method does not override or implement a method from a supertype
+    @Override
+    ^
+/Users/alexisquijada/SE Project/FinalProjectNew/tests/project/checkpointtests/Checkpoint3TestSuite.java:33: error: cannot find symbol
+        List<Class<?>> allTestClasses = Utils.loadAllTestClasses();
+                                        ^
+  symbol:   variable Utils
+  location: class Checkpoint3TestSuite
+/Users/alexisquijada/SE Project/FinalProjectNew/tests/project/checkpointtests/Checkpoint3TestSuite.java:57: error: cannot find symbol
+        Assertions.assertTrue(Utils.loadAllClasses().stream().anyMatch(clazz -> !clazz.isInterface() && interfaceType.isAssignableFrom(clazz)),
+                              ^
+  symbol:   variable Utils
+  location: class Checkpoint3TestSuite
+3 errors
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileTestJava'.
+> Compilation failed; see the compiler error output for details.
+
+* Try:
+> Run with --info option to get more log output.
+> Run with --scan to get full insights.
+
+BUILD FAILED in 570ms
+2 actionable tasks: 1 executed, 1 up-to-date

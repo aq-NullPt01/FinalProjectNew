@@ -13,6 +13,8 @@ public class ComputationAPIImpl implements ComputationAPI {
     public ComputationAPIImpl() {
         // No external dependencies needed
     }
+    
+    
 
     @Override
     public ComputationResult compute(ComputationRequest request) {

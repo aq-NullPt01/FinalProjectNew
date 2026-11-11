@@ -39,6 +39,8 @@ public class DataStorageAPIPrototype {
                 return "output.txt";
             }
         };
+        
+        
 
         // Read integer data from the input file
         IntegerData inputData =
