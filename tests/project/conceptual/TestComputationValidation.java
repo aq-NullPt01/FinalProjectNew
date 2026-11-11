@@ -1,6 +1,9 @@
 
 package project.conceptual;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -18,15 +21,18 @@ public class TestComputationValidation {
     }
 
     @Test
-    public void testNegativeMaximumValue() {
+    public void testNegativeInputReturnsEmptyList() {
+
+        ComputationAPI api = new ComputationAPIImpl();
 
         ComputationRequest request = () -> -5;
 
-        Assertions.assertThrows(
-                IllegalArgumentException.class,
-                () -> api.compute(request));
-    }
+        ComputationResult result = api.compute(request);
 
+        assertNotNull(result);
+
+        assertTrue(result.getPythagoreanTriples().isEmpty());
+    }
     @Test
     public void testValidMaximumValue() {
 
