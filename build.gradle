@@ -11,7 +11,7 @@ sourceSets {
 	}
 	test {
 	  java {
-	     srcDirs = ['tests','checkpoint-2-tests']
+	     srcDirs = ['test']
 	  }
 	 }
 }

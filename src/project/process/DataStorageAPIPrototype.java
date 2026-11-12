@@ -24,6 +24,7 @@ public class DataStorageAPIPrototype {
                 return "input.txt";
             }
         };
+        
 
         // Create a valid output destination
         OutputDestination destination =

@@ -15,7 +15,7 @@ public class Utils {
     }
     
     public static List<Class<?>> loadAllTestClasses() throws Exception {
-        File rootDir = new File("tests");
+        File rootDir = new File("test");
         List<Class<?>> result = new ArrayList<>();
         for (File f : rootDir.listFiles()) {
             loadClassesRec(f, result, "");
