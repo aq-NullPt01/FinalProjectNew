@@ -32,7 +32,7 @@ public class Checkpoint3TestSuite {
     public static void initializeAst() throws Exception {
         List<Class<?>> allTestClasses = Utils.loadAllTestClasses();
         Launcher launcher = new Launcher();
-        launcher.addInputResource("tests");
+        launcher.addInputResource("test");
         launcher.addInputResource("src");
         launcher.getEnvironment().setNoClasspath(true);
         launcher.getEnvironment().setAutoImports(true);
@@ -123,4 +123,3 @@ public class Checkpoint3TestSuite {
         return allSrcTypes.stream().filter(clazz -> !clazz.isInterface() && interfaceType.isAssignableFrom(clazz.getActualClass())).findFirst().get().getActualClass();
     }
 }
-
