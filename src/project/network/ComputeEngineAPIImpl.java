@@ -1,7 +1,7 @@
 package project.network;
 
 import java.util.List;
-
+import java.util.Objects;
 import project.conceptual.ComputationAPI;
 import project.conceptual.ComputationRequest;
 import project.conceptual.ComputationResult;
@@ -19,8 +19,9 @@ public class ComputeEngineAPIImpl implements ComputeEngineAPI {
             DataStorageAPI storage,
             ComputationAPI computation) {
 
-        this.storage = storage;
-        this.computation = computation;
+    	this.storage = Objects.requireNonNull(storage, "DataStorageAPI cannot be null");
+
+        this.computation = Objects.requireNonNull(computation, "ComputationAPI cannot be null");
     }
 
     @Override
