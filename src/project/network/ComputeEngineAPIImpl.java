@@ -81,6 +81,7 @@ public class ComputeEngineAPIImpl implements ComputeEngineAPI {
             return createResponse(false, "Job failed: " + exception.getMessage());
         }
     }
+    
 
     private JobResponse createResponse(
             boolean accepted,

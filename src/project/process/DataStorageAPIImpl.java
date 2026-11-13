@@ -1,3 +1,4 @@
+
 package project.process;
 
 import java.io.IOException;
@@ -8,31 +9,37 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Reads integer inputs from files and writes computation results.
- */
 public class DataStorageAPIImpl implements DataStorageAPI {
 
-    /**
-     * Creates a file-based data storage implementation.
-     */
+    // Constructor has no parameters to validate
     public DataStorageAPIImpl() {
     }
 
-    /**
-     * Reads integer values from the specified input file.
-     *
-     * @param source location of the input file
-     * @return integer data read from the file
-     */
+    // Read integer data from a file
     @Override
     public IntegerData readInputData(InputSource source) {
 
-        Path inputPath = Path.of(source.getLocation());
+        // Checkpoint 5: Validate input source
+        if (source == null) {
+            throw new IllegalArgumentException(
+                    "Input source cannot be null");
+        }
+
+        String location = source.getLocation();
+
+        // Validate file location
+        if (location == null || location.trim().isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Input file location cannot be empty");
+        }
+
+        Path inputPath = Path.of(location);
+
         List<Integer> values = new ArrayList<>();
 
         try {
-            List<String> lines = Files.readAllLines(inputPath, StandardCharsets.UTF_8);
+            List<String> lines = Files.readAllLines(
+                    inputPath, StandardCharsets.UTF_8);
 
             for (String line : lines) {
 
@@ -42,17 +49,31 @@ public class DataStorageAPIImpl implements DataStorageAPI {
                     continue;
                 }
 
-                String[] numbers = trimmedLine.split("[,\\s]+");
+                String[] numbers =
+                        trimmedLine.split("[,\\s]+");
 
                 for (String number : numbers) {
-                    values.add(Integer.parseInt(number));
+
+                    try {
+                        values.add(Integer.parseInt(number));
+
+                    } catch (NumberFormatException exception) {
+
+                        throw new IllegalArgumentException(
+                                "Invalid integer in input file: "
+                                + number, exception);
+                    }
                 }
             }
 
         } catch (IOException exception) {
-            throw new UncheckedIOException("Unable to read input file: " + inputPath, exception);
+
+            throw new UncheckedIOException(
+                    "Unable to read input file: "
+                    + inputPath, exception);
         }
 
+        // Return integer data
         return new IntegerData() {
 
             @Override
@@ -62,22 +83,52 @@ public class DataStorageAPIImpl implements DataStorageAPI {
         };
     }
 
-    /**
-     * Writes formatted computation results to the output file.
-     *
-     * @param destination location of the output file
-     * @param data computation output to write
-     */
+    // Write computation results to a file
     @Override
-    public void writeOutputData(OutputDestination destination,OutputData data) {
+    public void writeOutputData(
+            OutputDestination destination,
+            OutputData data) {
 
-        Path outputPath = Path.of(destination.getLocation());
+        // Checkpoint 5: Validate destination
+        if (destination == null) {
+            throw new IllegalArgumentException(
+                    "Output destination cannot be null");
+        }
+
+        // Validate output data
+        if (data == null) {
+            throw new IllegalArgumentException(
+                    "Output data cannot be null");
+        }
+
+        String location = destination.getLocation();
+
+        if (location == null || location.trim().isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Output file location cannot be empty");
+        }
+        
+
+        String outputText = data.getData();
+
+        if (outputText == null) {
+            throw new IllegalArgumentException(
+                    "Output text cannot be null");
+        }
+
+        Path outputPath = Path.of(location);
 
         try {
-            Files.writeString(outputPath,data.getData(),StandardCharsets.UTF_8);
+            Files.writeString(
+                    outputPath,
+                    outputText,
+                    StandardCharsets.UTF_8);
 
         } catch (IOException exception) {
-            throw new UncheckedIOException("Unable to write output file: " + outputPath,exception);
+
+            throw new UncheckedIOException(
+                    "Unable to write output file: "
+                    + outputPath, exception);
         }
     }
 }

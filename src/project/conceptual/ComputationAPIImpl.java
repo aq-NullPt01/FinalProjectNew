@@ -1,32 +1,38 @@
+
+
 package project.conceptual;
-
-import project.annotations.ConceptualAPI;
-
 
 import java.util.ArrayList;
 import java.util.List;
-/**
- * Conceptual @Override
-	API between the job handler and computation component.
- */
 
 public class ComputationAPIImpl implements ComputationAPI {
 
     public ComputationAPIImpl() {
-        // No external dependencies needed
+        // No parameters to validate
     }
 
+    
     @Override
-    public ComputationResult compute(
-            ComputationRequest request) {
+    public ComputationResult compute(ComputationRequest request) {
 
-        // Get the maximum value from the request
+        // Checkpoint 5: Validate the request
+        if (request == null) {
+            throw new IllegalArgumentException(
+                    "Computation request cannot be null");
+        }
+
         int maximumValue = request.getMaximumValue();
 
-        // Find all Pyth. triples
-        List<String> triples = findPythagoreanTriples(maximumValue);
+        List<String> triples = new ArrayList<>();
 
-        // Return the result through the API
+        // Zero and negative inputs produce no triples.
+        // This preserves existing API behavior.
+        if (maximumValue > 0) {
+            triples = findPythagoreanTriples(maximumValue);
+        }
+
+        final List<String> results = triples;
+
         return new ComputationResult() {
 
             @Override
@@ -36,13 +42,13 @@ public class ComputationAPIImpl implements ComputationAPI {
 
             @Override
             public List<String> getPythagoreanTriples() {
-                return triples;
+                return results;
             }
         };
     }
 
-    // Find all triples up to the maximum value
-    private List<String> findPythagoreanTriples(int maximumValue) {
+    private List<String> findPythagoreanTriples(
+            int maximumValue) {
 
         List<String> triples = new ArrayList<>();
 
@@ -53,10 +59,7 @@ public class ComputationAPIImpl implements ComputationAPI {
                 for (int c = b + 1; c <= maximumValue; c++) {
 
                     if (isPythagoreanTriple(a, b, c)) {
-
-                        String triple = a + "," + b + "," + c;
-
-                        triples.add(triple);
+                        triples.add(a + "," + b + "," + c);
                     }
                 }
             }
@@ -65,8 +68,8 @@ public class ComputationAPIImpl implements ComputationAPI {
         return triples;
     }
 
-    // Check whether three integers form a triple
-    private boolean isPythagoreanTriple(int a, int b, int c) {
+    private boolean isPythagoreanTriple(
+            int a, int b, int c) {
 
         long squaredA = (long) a * a;
         long squaredB = (long) b * b;

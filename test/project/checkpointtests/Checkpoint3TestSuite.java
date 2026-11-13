@@ -123,4 +123,3 @@ public class Checkpoint3TestSuite {
         return allSrcTypes.stream().filter(clazz -> !clazz.isInterface() && interfaceType.isAssignableFrom(clazz.getActualClass())).findFirst().get().getActualClass();
     }
 }
-

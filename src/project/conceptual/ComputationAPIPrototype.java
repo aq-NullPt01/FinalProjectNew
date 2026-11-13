@@ -2,30 +2,20 @@ package project.conceptual;
 
 import project.annotations.ConceptualAPIPrototype;
 
-/**
- * Prototype client for the computation API.
- */
 public class ComputationAPIPrototype {
 
+    @ConceptualAPIPrototype
+    public static void prototype(ComputationAPI api) {
 
-	 public static void main(String[] args) {
+        ComputationRequest request = () -> 10;
 
-		    // Create the computation API implementation
-	        ComputationAPI api = new ComputationAPIImpl();
+        ComputationResult result = api.compute(request);
 
-	        // Create a computation request
-	        ComputationRequest request = new ComputationRequest() {
+        System.out.println(result.getPythagoreanTriples());
+    }
 
-	            @Override
-	            public int getMaximumValue() {
-	                return 10;
-	            }
-	        };
-
-	        // Call the computation API
-	        ComputationResult result = api.compute(request);
-
-	        // Display the result
-	        System.out.println("Computation Result: " + result);
-	    }
-	}
+    
+    public static void main(String[] args) {
+        prototype(new ComputationAPIImpl());
+    }
+}
