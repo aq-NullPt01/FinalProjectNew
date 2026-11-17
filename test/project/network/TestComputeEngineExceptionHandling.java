@@ -19,6 +19,8 @@ import project.process.DataStorageAPI;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import project.process.InputSource;
+import project.process.OutputDestination;
 
 public class TestComputeEngineExceptionHandling {
 
@@ -30,6 +32,14 @@ public class TestComputeEngineExceptionHandling {
         ComputationAPI computation = mock(ComputationAPI.class);
 
         JobRequest request = mock(JobRequest.class);
+       
+        InputSource inputSource = mock(InputSource.class);
+        OutputDestination outputDestination =
+                mock(OutputDestination.class);
+
+        when(request.getInputSource()).thenReturn(inputSource);
+        when(request.getOutputDestination())
+                .thenReturn(outputDestination);
 
         // Simulate a storage component failure
         when(storage.readInputData(any()))
