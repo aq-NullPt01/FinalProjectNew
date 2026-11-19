@@ -118,8 +118,14 @@ public class JobHandler {
             // Format output
             text.append(limit);
 
-            text.append(
-                    delimiters.getInputResultDelimiter());
+            String inputResultDelimiter =
+                    delimiters.getInputResultDelimiter();
+
+            if (!inputResultDelimiter.equals(
+                    delimiters.getResultDelimiter())) {
+
+                text.append(inputResultDelimiter);
+            }
 
             text.append(
                     String.join(
